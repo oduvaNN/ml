@@ -1,0 +1,56 @@
+stages:
+  download:
+    cmd: python -m src.download
+    deps:
+      - src/download.py
+    params:
+      - data.dir
+      - data.dataset
+    outs:
+      - data/cifar-10-batches-py
+
+  train:
+    cmd: python -m src.train
+    deps:
+      - src/train.py
+      - src/model.py
+      - src/data.py
+      - data/cifar-10-batches-py
+    params:
+      - data.dir
+      - data.num_classes
+      - model
+      - training
+      - artifacts.dir
+      - artifacts.model_name
+      - artifacts.train_metrics_file
+      - artifacts.history_plot
+    outs:
+      - artifacts/best_model.pth
+      - artifacts/training_history.png
+    metrics:
+      - artifacts/train_metrics.json:
+          cache: false
+
+  evaluate:
+    cmd: python -m src.evaluate
+    deps:
+      - src/evaluate.py
+      - src/model.py
+      - src/data.py
+      - data/cifar-10-batches-py
+      - artifacts/best_model.pth
+    params:
+      - data.dir
+      - data.num_classes
+      - model
+      - training.batch_size
+      - training.seed
+      - artifacts.dir
+      - artifacts.metrics_file
+      - artifacts.metrics_plot
+    metrics:
+      - artifacts/metrics.json:
+          cache: false
+    outs:
+      - artifacts/test_metrics.png

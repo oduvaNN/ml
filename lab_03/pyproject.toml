@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "ml-lab-03"
+description = "DVC pipeline for CIFAR-10 classification"
+authors = ["Student <student@example.com>"]
+version = "0.1.0"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+torch = { version = "^2.6", source = "pytorch" }
+torchvision = { version = "^0.21", source = "pytorch" }
+matplotlib = "^3.10"
+numpy = "^2.2"
+pyyaml = "^6.0"
+scikit-learn = "^1.6"
+dvc = "^3.0"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.15"
+ruff = "^0.11"
+black = "^25.1"
+isort = "^6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "pytorch"
+priority = "supplemental"
+url = "https://download.pytorch.org/whl/cu124"
+
+[tool.black]
+line-length = 100
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+ignore_missing_imports = true

@@ -1,0 +1,26 @@
+data:
+  dir: data
+  dataset: cifar10
+  num_classes: 10
+
+model:
+  num_classes: 10
+  dropout: 0.3
+
+training:
+  num_epochs: 10
+  batch_size: 128
+  lr: 1.0e-3
+  weight_decay: 1.0e-4
+  lr_step_size: 5
+  lr_gamma: 0.5
+  seed: 42
+  label_smoothing: 0.1
+
+artifacts:
+  dir: artifacts
+  model_name: best_model.pth
+  metrics_file: metrics.json
+  train_metrics_file: train_metrics.json
+  history_plot: training_history.png
+  metrics_plot: test_metrics.png

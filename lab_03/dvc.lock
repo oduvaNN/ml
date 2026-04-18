@@ -1,0 +1,117 @@
+schema: '2.0'
+stages:
+  download:
+    cmd: python -m src.download
+    deps:
+    - path: src/download.py
+      hash: md5
+      md5: 15a14f3e16f8b04b107e13505120a4e4
+      size: 773
+    params:
+      params.yaml:
+        data.dataset: cifar10
+        data.dir: data
+    outs:
+    - path: data/cifar-10-batches-py
+      hash: md5
+      md5: 2c2c368a819f1df18fd0afa1c052c6c4.dir
+      size: 186214114
+      nfiles: 8
+  train:
+    cmd: python -m src.train
+    deps:
+    - path: data/cifar-10-batches-py
+      hash: md5
+      md5: 2c2c368a819f1df18fd0afa1c052c6c4.dir
+      size: 186214114
+      nfiles: 8
+    - path: src/data.py
+      hash: md5
+      md5: fe157a10d49524342000e26e694b9f3b
+      size: 2196
+    - path: src/model.py
+      hash: md5
+      md5: 5566cd3e685e6dfb81e4a215b7ea6fe9
+      size: 1073
+    - path: src/train.py
+      hash: md5
+      md5: ce208411153ad7f26d8ee3e1599b8b5d
+      size: 4691
+    params:
+      params.yaml:
+        artifacts.dir: artifacts
+        artifacts.history_plot: training_history.png
+        artifacts.model_name: best_model.pth
+        artifacts.train_metrics_file: train_metrics.json
+        data.dir: data
+        data.num_classes: 10
+        model:
+          num_classes: 10
+          dropout: 0.3
+        training:
+          num_epochs: 10
+          batch_size: 128
+          lr: 0.001
+          weight_decay: 0.0001
+          lr_step_size: 5
+          lr_gamma: 0.5
+          seed: 42
+          label_smoothing: 0.1
+    outs:
+    - path: artifacts/best_model.pth
+      hash: md5
+      md5: f396a0cf8ce1cad95c207b52ba50a867
+      size: 44775864
+    - path: artifacts/train_metrics.json
+      hash: md5
+      md5: ab972094ea8ecae3cd08443b74ed7348
+      size: 83
+    - path: artifacts/training_history.png
+      hash: md5
+      md5: c07de515501609ff5bc003cc6684d5de
+      size: 72169
+  evaluate:
+    cmd: python -m src.evaluate
+    deps:
+    - path: artifacts/best_model.pth
+      hash: md5
+      md5: f396a0cf8ce1cad95c207b52ba50a867
+      size: 44775864
+    - path: data/cifar-10-batches-py
+      hash: md5
+      md5: 2c2c368a819f1df18fd0afa1c052c6c4.dir
+      size: 186214114
+      nfiles: 8
+    - path: src/data.py
+      hash: md5
+      md5: fe157a10d49524342000e26e694b9f3b
+      size: 2196
+    - path: src/evaluate.py
+      hash: md5
+      md5: 7b1ec7495a6fd98666f3658860ed65a6
+      size: 3352
+    - path: src/model.py
+      hash: md5
+      md5: 5566cd3e685e6dfb81e4a215b7ea6fe9
+      size: 1073
+    params:
+      params.yaml:
+        artifacts.dir: artifacts
+        artifacts.metrics_file: metrics.json
+        artifacts.metrics_plot: test_metrics.png
+        data.dir: data
+        data.num_classes: 10
+        model:
+          num_classes: 10
+          dropout: 0.3
+        training.batch_size: 128
+        training.seed: 42
+    outs:
+    - path: artifacts/metrics.json
+      hash: md5
+      md5: e6d11cd1ce13ef99bf36310eff164600
+      size: 118
+    - path: artifacts/test_metrics.png
+      hash: md5
+      md5: 7fed92ee9fbd6b9c7379dfcc3f6be514
+      size: 19781
