@@ -1,0 +1,10 @@
+wandb/
+artifacts/
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.pth
+*.egg-info/
+.ruff_cache/
+.mypy_cache/
