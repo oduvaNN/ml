@@ -1,0 +1,15 @@
+mlflow:
+  tracking_uri: "http://127.0.0.1:5000"
+  experiment_name: "CIFAR10-Classification"
+
+data:
+  dir: "../lab_03/data"
+  dataset: cifar10
+  num_classes: 10
+  seed: 42
+
+model:
+  num_classes: 10
+
+gradcam:
+  target_layer: "net.layer4"

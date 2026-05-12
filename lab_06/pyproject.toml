@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "ml-lab-06"
+description = "Streamlit Interactive Model Analysis Dashboard"
+authors = ["Student <student@example.com>"]
+version = "0.1.0"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.41"
+torch = { version = "^2.6", source = "pytorch" }
+torchvision = { version = "^0.21", source = "pytorch" }
+mlflow = "^2.19"
+matplotlib = "^3.10"
+plotly = "^5.24"
+scikit-learn = "^1.6"
+pyyaml = "^6.0"
+numpy = "^2.2"
+pillow = "^11.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.11"
+black = "^25.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "pytorch"
+priority = "supplemental"
+url = "https://download.pytorch.org/whl/cu124"
+
+[tool.black]
+line-length = 100
+
+[tool.ruff]
+line-length = 100
